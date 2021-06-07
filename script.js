@@ -1,33 +1,35 @@
 'use strict';
 
-class Rectangle {
-    constructor(w, h) {
-        this.w = w;
-        this.h = h;
-    }
+const btn = document.querySelector('.btn'),
+      elem = document.querySelector('.box');  
+let pos = 0;
 
-    calcArea() {
-        return this.w * this.h;
+// function myAnimation() {
+//     let pos = 0;
+
+//     const id = setInterval(frame, 10);
+//     function frame() {
+//         if (pos == 300) {
+//             clearInterval(id);
+//         } else {
+//             pos++;
+//             elem.style.top = pos + "px";
+//             elem.style.left = pos + 'px';
+//         }
+//     }
+// }
+
+function myAnimation() {
+    pos++;
+    elem.style.top = pos + "px";
+    elem.style.left = pos + 'px';
+
+    if (pos < 300) {
+        requestAnimationFrame(myAnimation);
     }
 }
 
-class ColoredRectangleWithText extends Rectangle {
-    constructor(w, h, text, bgColor) {
-        super(w, h);
-        this.text = text;
-        this.bgColor = bgColor;
-    }
+btn.addEventListener('click', () => requestAnimationFrame(myAnimation));
 
-    showMyProps() {
-        console.log(`Текст: ${this.text}, Цвет: ${this.bgColor}`);
-    }
-}
-
-const square = new Rectangle(10, 10);
-const loSquare = new Rectangle(20, 100);
-console.log(square.calcArea());
-console.log(loSquare.calcArea());
-
-const cRect = new ColoredRectangleWithText(8, 12, 'abc', 'red');
-cRect.showMyProps();
-console.log(cRect.calcArea());
+let id = requestAnimationFrame(myAnimation);
+cancelAnimationFrame(id);
